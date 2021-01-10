@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Commodity Details</title>
+		<link rel="stylesheet" type="text/css" href="./css/commodity_details.css"/>
+		<script src="./js/commodity_details.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+		<div class="commodity_box">
+			<img src="<?php echo $res['productpicture']; ?>"/>
+			<div class="details_box">
+				<span class="details_box_top">
+					<?php echo $res['commodityname']; ?>
+				</span>
+				<div class="address">
+					<span>配送至：</span>
+					<span style="margin-top: 0.6px;"><input type="text" readonly="readonly" value="<?php if($login){if($row['address'] != null){echo $row['address'];}else{echo '请设置配送地址！';}}else{echo '请登录！';} ?>" /></span>
+					<span>修改</span>
+					<span>有货</span>
+				</div>
+			</div>
+			<div class="incart_box">
+				<div class="buy_box">
+					<input class="num" type="text" readonly="readonly" name="" value="1" />
+					<a href="" class="num_add">+</a>
+					<a href="javascript:void(0);" style="margin-top: -24px; opacity: 0.5;" class="num_sub">-</a>
+				</div>
+				<?php if($login){ ?>
+					<input class="id" type="text" value="<?php echo $userid;?>" style="display: none;"/><input class="id" type="text" value="<?php echo $id; ?>" style="display: none;"/>
+					<a href="cart_add.php?userid=<?php echo $userid;?>&id=<?php echo $id; ?>&num=1" class="add_cart"><b>加入购物车</b></a>
+				<?php }else{ ?>
+					<a href="login.php" class="add_cart"><b>加入购物车</b></a>
+				<?php } ?>
+			</div>
+		</div>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,20 @@
+.information_box{
+	border-radius: 15px;
+	background: #e3e3e3;
+	width: 600px;
+	height: 400px;
+	margin: auto;
+	text-align: center;
+}
+.information_box input{
+	width: 200px;
+	height: 50px;
+	border: 0px;
+	border-bottom: 2px solid #000;
+	padding-left: 20px;
+	border-radius: 20px;
+}
+.information_box input:hover{
+	background: #BBBBBB;
+	cursor: pointer;
+}

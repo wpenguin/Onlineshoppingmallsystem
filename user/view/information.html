@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Information</title>
+		<link rel="stylesheet" type="text/css" href="./css/information.css"/>
+	</head>
+		<div class="information_box">
+			<form action="informations_edit.php?uid=<?php echo $uid;?>" method="post">
+				<span>账号：</span><input style="margin-top: 30px;" type="text" name="uname" required="required" value="<?php echo $col['username']; ?>" />
+				<br />
+				<span>姓名：</span><input name="name" type="text" required="required" value="<?php if($row['name'] != null){echo $row['name'];}else{echo '请设置姓名';} ?>" />
+				<br />
+				<span>性别：</span><input name="sex" type="text" required="required" value="<?php if($row['sex'] != null){echo $row['sex'];}else{echo '请设置性别';} ?>" />
+				<br />
+				<span>电话：</span><input name="phone" type="text" required="required" value="<?php echo $col['phonenumber']; ?>" />
+				<br />
+				<span>地址：</span><input name="address" type="" required="required" value="<?php if($row['address'] != null){echo $row['address'];}else{echo '请设置地址';} ?>" />
+				<br />
+				<span>介绍：</span><input name="signature" type="" required="required" name="" value="<?php if($row['signature'] != null){echo $row['signature'];}else{echo '自我介绍';} ?>" />
+				<br />
+				<input style="margin-left: 48px;width: 100px;text-align: center;padding-left: 0px;" type="submit" value="修改"/>
+				<input id="quxiao" style="width: 100px;text-align: center;padding-left: 0px;" type="button" value="取消"/>
+			</form>
+		</div>
+		<script type="text/javascript">
+			window.onload = function () {
+				var quxiaoElt = document.getElementById("quxiao");
+				quxiao.onclick = function () {
+					history.back(-1);
+				}
+			}
+		</script>
+	<body>
+	</body>
+</html>

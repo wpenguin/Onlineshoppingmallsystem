@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Sakura Background System</title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="./css/index.css"/>
+	<script src="./js/index.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		<div class="box">
+			<div class="box_top">
+				<strong style="margin-left: 100px;">樱&nbsp;花&nbsp;后&nbsp;台&nbsp;管&nbsp;理&nbsp;系&nbsp;统</strong>
+			</div>
+			<div class="box_bottom">
+				<div class="box_bottom_left">
+					<ul>
+						<?php if(!$adminlogin){ ?>
+							<li class="li">管理员登录</li>
+						<?php } ?>
+						<li class="li">管理员信息</li>
+						<li class="li">商品管理</li>
+						<li class="li">用户管理</li>
+						<li class="li">订单管理</li>
+						<input type="text" style="display: none;" id="islogin" value="<?php echo $adminlogin; ?>" />
+					</ul>
+				</div>
+				<div class="box_bottom_right">
+					<?php if($adminlogin){ ?>
+						<?php if(input_get('userpage') != null || input_get('itempage') != null || input_get('cid') != null || input_get('boolean') != null || input_get('allpage') != null|| input_get('falsepage') != null || input_get('turepage') != null){
+							$ll = 'display:none';
+						} ?>
+						<div class="right_box" style="<?php echo $ll;?>">
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<th>id</th>
+									<th>管理员</th>
+									<th>密码</th>
+									<th>操作</th>
+								</tr>
+								<tr>
+									<td><?php echo $adminres['id']; ?></td>
+									<td><?php echo $adminres['adminname']; ?></td>
+									<td>无法查看</td>
+									<td style="width: 240px;">
+										<a href="">修改密码</a>
+										<br />
+										<a href="">添加低权限管理员</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="right_box" style="<?php if(input_get('itempage') == null){echo 'display:none';} ?>">
+							<a href="add_commodity.php" style="margin-left: 10px;line-height: 60px;"><b style="font-size: 20px;">添加商品</b></a>
+							<table style="margin-top: -25px;" border="0" cellspacing="0" cellpadding="0">
+								<thead>
+									<tr>
+										<th>id</th>
+										<th>编号</th>
+										<th>商名</th>
+										<th>价格</th>
+										<th>折扣</th>
+										<th>图片</th>
+										<th>店</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach($itemres as $row){ ?>
+										<tr>
+											<td>
+												<?php echo $row['id']; ?>
+											</td>
+											<td>
+												<?php echo $row['commodityno']; ?>
+											</td>
+											<td>
+												<span title="<?php echo $row['commodityname']; ?>">
+													<?php echo $row['commodityname']; ?>
+												</span>
+											</td>
+											<td>
+												<?php echo $row['commodityprice']; ?>
+											</td>
+											<td>
+												<?php if($row['discount'] != 1){ echo $row['discount']; }else{echo '暂无';}?>
+											</td>	
+											<td>
+												<img id="productpicture" src="../user<?php echo $row['productpicture']; ?>"/>
+											</td>
+											<td>
+												<?php echo $row['manufacturer']; ?>
+												<img id="sakurapicture" src="img/sakura.jpg"/>
+											</td>
+											<td style="width: 180px;">
+												<img id="i" src="img/edt.gif"/>
+												<a href="index.php?cid=<?php echo $row['id']; ?>">
+													编辑
+												</a>
+												<img id="i" src="img/del.gif"/>
+												<a href="commodity_del.php?id=<?php echo $row['id']; ?>">
+													删除
+												</a>
+											</td>
+										</tr>
+									<?php } ?>
+								</tbody>
+							</table>
+							<div class="itempage">
+								<?php echo $itempage_html; ?>
+							</div>
+						</div>
+						<div class="right_box" style="<?php if(input_get('userpage') == null){echo 'display:none';} ?>">
+							<table border="0" cellspacing="0" cellpadding="0">
+								<thead>
+									<tr>
+										<th>id</th>
+										<th>用户名</th>
+										<th style="width: 180px;">手机号</th>
+										<th style="width: 180px;">编辑</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach($userres as $row){ ?>
+										<tr>
+											<td><?php echo $row['id']; ?></td>
+											<td><?php echo $row['username']; ?></td>
+											<td><?php echo $row['phonenumber']; ?></td>	
+											<td>
+												<img id="i" src="img/edt.gif"/>
+												<a href="javasrcipt:void(0);">
+													详情
+												</a>
+												<img id="i" src="img/del.gif"/>
+												<a href="user_del.php?id=<?php echo $row['id']; ?>">
+													删除
+												</a>
+											</td>
+										</tr>
+									<?php } ?>
+								</tbody>
+							</table>
+							<div class="userpage">
+								<?php echo $userpage_html; ?>
+							</div>
+						</div>
+						<?php if(input_get('boolean') != null || input_get('allpage') != null || input_get('falsepage') != null || input_get('turepage') != null){
+							$qq = 'display:block';
+						}else{
+							$qq = 'display:none';
+						}?>
+						<div class="right_box" style="<?php echo $qq; ?>">
+							<a href="index.php?boolean=all" style="margin-left: 10px;line-height: 100px;"><b style="font-size: 20px;">全部</b></a>
+							<a href="index.php?boolean=false" style="margin-left: 10px;line-height: 100px;"><b style="font-size: 20px;">未处理</b></a>
+							<a href="index.php?boolean=ture" style="margin-left: 10px;line-height: 100px;"><b style="font-size: 20px;">已处理</b></a>
+							<?php if(($boolean == null || $boolean == 'all' || input_get('allpage') != null) &&  input_get('falsepage') == null &&  input_get('turepage') == null){ ?>
+								<table style="margin-top: -25px;" border="0" cellspacing="0" cellpadding="0">
+									<thead>
+										<tr>
+											<th>订单号</th>
+											<th>商品名称</th>
+											<th>购买数量</th>
+											<th>总金额</th>
+											<th>联系人</th>
+											<th>联系电话</th>
+											<th>地址</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach($orderrows as $orow){ ?>
+											<tr class="order">
+												<td>
+													<?php echo $orow['orderno']; ?>
+												</td>
+												<td>
+													<span title="<?php echo $orow[0]; ?>">
+														<?php echo $orow[0]; ?>
+													</span>
+												</td>
+												<td>
+													<?php echo $orow['num']; ?>
+												</td>
+												<td>
+													<?php echo $orow['cprice']; ?>
+												</td>
+												<td>
+													<?php echo $orow['contact']; ?>
+												</td>	
+												<td>
+													<?php echo $orow['phone']; ?>
+												</td>
+												<td>
+													<?php echo $orow['address']; ?>
+												</td>
+												<td>
+													<?php if($orow['state'] == 0){echo '未处理';}else{echo '已发货';} ?>
+												</td>
+												<td style="width: 180px;">
+													<img id="i" src="img/edt.gif"/>
+													<a href="order_edit.php?orderno=<?php echo $orow['orderno']; ?>">
+														发货
+													</a>
+													<img id="i" src="img/del.gif"/>
+													<a href="order_del.php?orderno=<?php echo $orow['orderno']; ?>">
+														删除
+													</a>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+								<div class="" style="float: right;margin-right: 10px;margin-top: 10px;">
+									<?php echo $allpage_html; ?>
+								</div>
+							<?php }else if($boolean == 'false' || input_get('falsepage') != null){ ?>
+								<table style="margin-top: -25px;" border="0" cellspacing="0" cellpadding="0">
+									<thead>
+										<tr>
+											<th>订单号</th>
+											<th>商品名称</th>
+											<th>购买数量</th>
+											<th>总金额</th>
+											<th>联系人</th>
+											<th>联系电话</th>
+											<th>地址</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach($orderrows as $orow){ ?>
+											<tr class="order">
+												<td>
+													<?php echo $orow['orderno']; ?>
+												</td>
+												<td>
+													<span title="<?php echo $orow[0]; ?>">
+														<?php echo $orow[0]; ?>
+													</span>
+												</td>
+												<td>
+													<?php echo $orow['num']; ?>
+												</td>
+												<td>
+													<?php echo $orow['cprice']; ?>
+												</td>
+												<td>
+													<?php echo $orow['contact']; ?>
+												</td>	
+												<td>
+													<?php echo $orow['phone']; ?>
+												</td>
+												<td>
+													<?php echo $orow['address']; ?>
+												</td>
+												<td>
+													<?php if($orow['state'] == 0){echo '未处理';}else{echo '已发货';} ?>
+												</td>
+												<td style="width: 180px;">
+													<img id="i" src="img/edt.gif"/>
+													<a href="order_edit.php?orderno=<?php echo $orow['orderno']; ?>">
+														发货
+													</a>
+													<img id="i" src="img/del.gif"/>
+													<a href="order_del.php?orderno=<?php echo $orow['orderno']; ?>">
+														删除
+													</a>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+								<div class="" style="float: right;margin-right: 10px;margin-top: 10px;">
+									<?php echo $falsepage_html; ?>
+								</div>
+							<?php }else if($boolean == 'ture'  || input_get('turepage') != null){ ?>
+								<table style="margin-top: -25px;" border="0" cellspacing="0" cellpadding="0">
+									<thead>
+										<tr>
+											<th>订单号</th>
+											<th>商品名称</th>
+											<th>购买数量</th>
+											<th>总金额</th>
+											<th>联系人</th>
+											<th>联系电话</th>
+											<th>地址</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach($orderrows as $orow){ ?>
+											<tr class="order">
+												<td>
+													<?php echo $orow['orderno']; ?>
+												</td>
+												<td>
+													<span title="<?php echo $orow[0]; ?>">
+														<?php echo $orow[0]; ?>
+													</span>
+												</td>
+												<td>
+													<?php echo $orow['num']; ?>
+												</td>
+												<td>
+													<?php echo $orow['cprice']; ?>
+												</td>
+												<td>
+													<?php echo $orow['contact']; ?>
+												</td>	
+												<td>
+													<?php echo $orow['phone']; ?>
+												</td>
+												<td>
+													<?php echo $orow['address']; ?>
+												</td>
+												<td>
+													<?php if($orow['state'] == 0){echo '未处理';}else{echo '已发货';} ?>
+												</td>
+												<td style="width: 180px;">
+													<img id="i" src="img/edt.gif"/>
+													<a href="order_edit.php?orderno=<?php echo $orow['orderno']; ?>">
+														发货
+													</a>
+													<img id="i" src="img/del.gif"/>
+													<a href="order_del.php?orderno=<?php echo $orow['orderno']; ?>">
+														删除
+													</a>
+												</td>
+											</tr>
+										<?php } ?>
+									</tbody>
+								</table>
+								<div class="" style="float: right;margin-right: 10px;margin-top: 10px;">
+									<?php echo $turepage_html; ?>
+								</div>
+							<?php } ?>
+						</div>
+						<div class="right_box" style="<?php if(input_get('cid') == null){echo 'display:none';} ?>">
+							<form action="commodity_edit.php?id=<?php echo (int)input_get('cid'); ?>" method="post">
+								<table border="0" cellspacing="0" cellpadding="0">
+									<thead>
+										<tr>
+											<th>id</th>
+											<th>商品编号</th>
+											<th>商品名称</th>
+											<th>价格</th>
+											<th>折扣</th>
+											<th style="width: 150px;">图片<br />暂不支持图片修改</th>
+											<th style="width: 150px;">店<br />暂不支持店修改</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody class="tbody">
+										<tr>
+											<td>
+												<?php echo $crow['id']; ?>
+											</td>
+											<td>
+												<input style="width: 50px; height: 30px;" required="required" type="text" name="commodityno" value="<?php echo $crow['commodityno']; ?>" />
+											</td>
+											<td>
+												<input style="height: 30px;" type="text" required="required" title="<?php echo $crow['commodityname']; ?>" name="commodityname" value="<?php echo $crow['commodityname']; ?>" />
+											</td>
+											<td>
+												<input style="width: 60px; height: 30px;" required="required" title="<?php echo $crow['commodityprice']; ?>" type="text" name="commodityprice" value="<?php echo $crow['commodityprice']; ?>" />
+											</td>
+											<td>
+												<input style="width: 30px; height: 30px;" required="required" type="text" name="discount" value="<?php echo $crow['discount']; ?>" />
+											</td>	
+											<td>
+												<img style="width: 140px;" id="productpicture" src="../user<?php echo $crow['productpicture']; ?>"/>
+											</td>
+											<td>
+												<?php echo $crow['manufacturer']; ?>
+												<img id="sakurapicture" src="img/sakura.jpg"/>
+											</td>
+											<td class="do">
+												<img id="i" src="img/edt.gif"/>
+												<input type="submit" value="修改" />
+												<br />
+												<br />
+												<img id="i" src="img/del.gif"/>
+												<input id="back" type="button" value="取消" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					<?php }else{ ?>
+						<div id="logining" class="right_box">
+							<form action="login.php" method="post">
+								<span>名&nbsp;&nbsp;&nbsp;：</span><input type="text" name="adminname" id="adminname" value="" style="border-radius: 7px; padding-left: 10px;"/>
+								<span>密码：</span><input type="password" name="adminpassword" id="adminpassword" value="" style="border-radius: 7px; padding-left: 10px;"/>
+								<input class="submit" style="border-radius: 7px;width: 100px;" type="submit" value="登录"/>
+							</form>
+						</div>
+						<div id="unlogin" class="right_box" style="display: none">
+							<strong>无权观看！请进行管理员登录！</strong>
+						</div>
+						<div id="unlogin" class="right_box" style="display: none">
+							<strong>无权观看！请进行管理员登录！</strong>
+						</div>
+						<div id="unlogin" class="right_box" style="display: none">
+							<strong>无权观看！请进行管理员登录！</strong>
+						</div>
+						<div id="unlogin" class="right_box" style="display: none">
+							<strong>无权观看！请进行管理员登录！</strong>
+						</div>
+						<div id="unlogin" class="right_box" style="display: none">
+							<strong>无权观看！请进行管理员登录！</strong>
+						</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Add Commodity</title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="css/add_commodity.css"/>
+	<script src="js/add_commodity.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		<div class="right_box">
+			<form action="add_commodity.php" method="post">
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<th>商品编号</th>
+						<th>商品名称</th>
+						<th>价格</th>
+						<th>店</th>
+						<th>图片</th>
+						<th>操作</th>
+					</tr>
+					<tr>
+						<td class="add_com">
+							<input style="width: 80px;" type="text" name="commodityno" required="required">
+						</td>
+						<td class="add_com">
+							<input style="width: 200px;" type="text" name="commodityname" required="required">
+						</td>
+						<td class="add_com">
+							<input style="width: 80px;" type="text" id="commodityprice" name="commodityprice" required="required">
+						</td>
+						<td class="add_com">
+							<input style="width: 100px;" type="text" id="manufacturer" name="manufacturer" value="樱花自营店" readonly="readonly">
+						</td>
+						<td class="add_com">
+							<input style="width: 140px;" type="text" id="pictures" name="picture" readonly="readonly" required="required" value="<?php echo './img/'.$info.'.jpg'; ?>">
+						</td>
+						<td class="do">
+							<input style="color: red; height: 25px; width: 70px; border-radius: 5px;" type="submit" value="添加" />
+							<br />
+							<br />
+							<input style="height: 25px; width: 70px; border-radius: 5px;" type="button" value="清空" />
+						</td>
+					</tr>
+				</table>
+			</form>
+			<div class="picture_box">
+				<form enctype="multipart/form-data" method="post" id="form">
+					<!--<input type="text" id="pict" readonly="readonly"></input>-->
+					<img id="picture" src="<?php echo '../user/img/'.$info.'.jpg?rand='.rand(); ?>" onerror="this.src='./img/default.jpg'"/>
+					<input id="c" type="file" name="pic" style="display: none;">
+					<input style="float: left;margin-top: 5px;border-radius: 5px;" type="button" id="pic" value="选择图片"></input>
+					<button style="float: left;margin-left: 6px;margin-top: 5px;color: red;border-radius: 5px;" value="上传图片" id="submit"/>dddddd
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

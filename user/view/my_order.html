@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>My Order</title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="./css/my_order.css"/>
+	<body>
+		<div class="top_box">
+			<div class="box_top" style="background: #fff; border-bottom: 0px;border-top: 0px;">
+				<div id="box_left"><b><a href="my_order.php?userid=<?php echo $uid; ?>&state=all" style="color: #000;">全部订单</a></b></div>
+				<div id="box_left"><b><a href="my_order.php?userid=<?php echo $uid; ?>&state=未" style="color: #666;">未发货</a></b></div>
+				<div id="box_left"><b><a href="my_order.php?userid=<?php echo $uid; ?>&state=已" style="color: #666;">已发货</a></b></div>
+			</div>
+			<div class="box_top">
+				<div id="box_left" class="check_box">
+					
+				</div>
+				<div id="box_left" class="c_box">商品</div>
+				<div id="box_right" class="do_box">状态</div>
+				<div id="box_right" style="margin-right: 30px;">信息</div>
+				<div id="box_right" class="count_box">总价</div>
+				<div id="box_right" style="margin-right: 30px;" class="n_box">数量</div>
+				<div id="box_right" style="margin-right: -20px;" class="p_box">单价</div>
+				<div id="box_right" class="no_box">订单号</div>
+			</div>
+			<div class="box_body">
+				<?php foreach($false as $row){ ?>
+					<div class="box_box">
+						<div class="box_box_right">
+							<div class="comm_box">
+								<img src="<?php echo $row[0]; ?>"/>
+								<span id="">
+									<a href=""><?php echo $row[1]; ?></a>
+								</span>
+							</div>
+							<div id="box_right_box" class="do_box">
+								<?php if($row['state']){ ?>
+									<span>已发货</span>
+									<br />
+									<a href="">申请退货</a>
+								<?php }else{ ?>
+									<span>未发货</span>
+									<br />
+									<a href="">申请退单</a>
+								<?php } ?>
+							</div>
+							<div id="box_right_box">
+								联系人：<?php echo $row['contact']; ?>
+								<span style="display: block; margin-top: -20px;">
+									联系电话：
+								</span>
+								<span style="display: block; margin-top: -20px;">
+									<?php echo $row['phone']; ?>
+								</span>
+								<span style="display: block; margin-top: -20px;">
+									地址：
+								</span>
+								<span style="display: block; margin-top: -20px;">
+									<?php echo $row['address']; ?>
+								</span>
+							</div>
+							<div id="box_right_box" class="count_box">
+								￥<?php echo $row['cprice']; ?>
+							</div>
+							<div id="box_right_box" class="n_box">
+								×<?php echo $row['num']; ?>
+							</div>
+							<div id="box_right_box" class="p_box">
+								￥<?php echo $row[2]*$row[3]; ?>
+								<?php if($row[3] != 1){echo ($row[3]*10).'折';} ?>
+							</div>
+							<div id="box_right_box" class="no_box">
+								<?php echo $row['orderno']; ?>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
+			</div>
+		</div>
+	</body>
+</html>

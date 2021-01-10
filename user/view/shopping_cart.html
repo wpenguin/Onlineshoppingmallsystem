@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Shopping Cart</title>
+	</head>
+	<link rel="stylesheet" type="text/css" href="./css/shopping_cart.css"/>
+	<script src="./js/shopping_cart.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		<div class="top_box">
+			<div class="box_top" style="border-top: 0px;border-bottom: 0px; background: #fff;">
+				<div class="address">
+					<span style="margin-top: 0.6px;"><input type="text" id="rname" value="<?php if($login){if($name != null){echo $name;}else{echo '请设置联系人！';}}else{echo '请登录！';} ?>" style="width: 110px;"/></span>
+					<span style="margin-top: 0.6px;"><input type="text" id="phone" style="width: 100px;" value="<?php if($login){if($phone != null){echo $phone;}else{echo '请设置联系方式！';}}else{echo '请登录！';} ?>" /></span>
+					<span>配送至：</span>
+					<span style="margin-top: 0.6px;"><input type="text" id="address" value="<?php if($login){if($address != null){echo $address;}else{echo '请设置配送地址！';}}else{echo '请登录！';} ?>" /></span>
+					<a id="go" href="information_edit.php?uid=<?php echo $userid; ?>" style="color: #E33333;"><span>修改</span></a>
+					<span>有货</span>
+				</div>
+			</div>
+			<div class="box_top">
+				<div id="box_left" class="check_box">
+					<input type="checkbox" value="" />
+					全选
+				</div>
+				<div id="box_left" class="c_box">商品</div>
+				<div id="box_right" class="do_box">操作</div>
+				<div id="box_right" class="count_box">小计</div>
+				<div id="box_right" class="n_box">数量</div>
+				<div id="box_right" class="d_box">限时折扣</div>
+				<div id="box_right" class="p_box">价格</div>
+			</div>
+			<div class="box_body">
+				<?php foreach($max as $row){ ?>
+					<div class="box_box">
+						<div class="box_box_right">
+							<div class="comm_box">
+								<img src="<?php echo $row['productpicture']; ?>"/>
+								<span id="">
+									<a href=""><?php echo $row['commodityname']; ?></a>
+								</span>
+							</div>
+							<div id="box_right_box" class="do_box">
+								<a href="cart_sub.php?id=<?php echo $row[1]; ?>&uid=<?php echo $userid; ?>">删除</a>
+							</div>
+							<div id="box_right_box" class="count_box">
+								<span class="countbox" >
+									<b>￥<?php echo $row['commodityprice']*$row['discount']*$row[0]; ?></b>
+								</span>
+							</div>
+							<div id="box_right_box" class="n_box">
+								<div class="num_box">
+									<a href="javascript:void(0);" class="num_sub" style="float: left;border-right: 0;color: #e9e9e9;cursor: default;">-</a>
+									<input readonly="readonly" class="num" type="text" value="<?php echo $row[0]; ?>" />
+									<a href="" class="num_add" style="border-left: 0;">+</a>
+								</div>
+							</div>
+							<div id="box_right_box" class="d_box">
+								<span class="discountbox" style="display: none;"><?php echo $row['discount']; ?></span>
+								<b><?php if($row['discount'] == 1){ echo "暂无"; }else{ echo '限时'.($row['discount']*10).'折'; } ?></b>
+							</div>
+							<div id="box_right_box" class="p_box">
+								<?php if($row['discount'] == 1){ ?>
+									<b style="color: #DF3033;">￥</b>
+									<span class="pricebox">
+										<?php echo $row['commodityprice']; ?>
+									</span>
+								<?php }else{ ?>
+									<span style="text-decoration: line-through;">
+										￥<?php echo $row['commodityprice']; ?>
+									</span>
+									<b style="color: #DF3033;">￥</b>
+									<span class="pricebox">
+										<?php echo $row['commodityprice']*$row['discount']; ?>
+									</span>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
+				<div class="box_foot">
+					<input type="text" style="display: none;"  class="uid_box" value="<?php echo $userid; ?>" />
+					<?php foreach($max as $row){ ?>
+						<input style="display: none;" type="text" class="id_box" value="<?php echo $row[1]; ?>" />
+					<?php } ?>
+					<input type="text" id="ah_box" style="display: none;" value="<?php foreach($max as $row){echo '&id[]='.$row[1].'&num[]='.$row[0].'&cprice[]='.($row[0]*$row['discount']*$row['commodityprice']).'%';} ?>" />
+					<div class="to_cart">
+						<a class="too_cart" href="order_add.php?uid=<?php echo $userid; ?><?php foreach($max as $row){echo '&id[]='.$row[1].'&num[]='.$row[0].'&cprice[]='.($row[0]*$row['discount']*$row['commodityprice']);} ?>">
+						<b>立即结算</b>
+						</a>
+					</div>
+					<div class="" style="width: 220px;height: 51px;">
+						<b><span style="line-height: 51px;font-size: 22px;color: #000;">总金额：</span></b>
+						<b><span id="cmoney" style="font-size: 18px;color: red;">
+							￥<?php echo $cmoney; ?>
+						</span></b>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
